@@ -1,25 +1,24 @@
-package io.iacto.transformations
+package io.iacto
 
 import cats.implicits._
 
-case class Format(template: String) extends Transformation {
-  override def toString: String = template
-  override def apply(args: Map[io.iacto.Header, String]): String = {
+case class Formula(formula: String) {
+  def apply(args: Map[Header, String]): String = {
     """\{\{([^{]+)\}\}""".r
       .replaceAllIn(
-        template, { m =>
+        formula, { m =>
           val headerName :: functionNames =
             m.group(1).split('|').map(_.trim).toList
 
           val header = args
-            .get(io.iacto.Header(headerName))
+            .get(Header(headerName))
 
           val function = functionNames
-            .traverse(FormatFunction.fromString)
+            .traverse(FormulaFunction.fromString)
             .map { functions =>
               val empty: String => String = identity
               functions
-                .map(_.format)
+                .map(_.apply)
                 .foldLeft(empty)(_.andThen(_))
             }
 
@@ -31,28 +30,28 @@ case class Format(template: String) extends Transformation {
   }
 }
 
-sealed trait FormatFunction {
+sealed trait FormulaFunction {
   def toString: String
-  def format: String => String
+  def apply: String => String
 }
 
-object FormatFunction {
-  case object Lower extends FormatFunction {
+object FormulaFunction {
+  case object Lower extends FormulaFunction {
     override val toString: String = "lower"
-    override val format = _.toLowerCase
+    override val apply = _.toLowerCase
   }
 
-  case object Upper extends FormatFunction {
+  case object Upper extends FormulaFunction {
     override val toString: String = "upper"
-    override val format = _.toUpperCase
+    override val apply = _.toUpperCase
   }
 
-  case object Capitalize extends FormatFunction {
+  case object Capitalize extends FormulaFunction {
     override val toString: String = "capitalize"
-    override val format = _.capitalize
+    override val apply = _.capitalize
   }
 
   def all = Iterable(Lower, Upper, Capitalize)
-  def fromString(str: String): Option[FormatFunction] =
+  def fromString(str: String): Option[FormulaFunction] =
     all.find(_.toString.toLowerCase === str.toLowerCase)
 }
