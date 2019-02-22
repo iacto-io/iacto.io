@@ -1,11 +1,13 @@
-package io.iacto
+package io.iacto.core
 
 import cats.implicits._
 import fs2._
 
 case class Format[F[_]](delimiter: String) {
   def read: Pipe[F, String, Map[Header, String]] = { in =>
-    val rows = in.map(_.split(delimiter))
+    val rows = in
+      .filter(_.trim.nonEmpty)
+      .map(_.split(delimiter))
 
     val headers = rows.head.map(_.map(Header.apply))
     val body = rows.drop(1)

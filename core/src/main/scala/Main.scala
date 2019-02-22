@@ -1,4 +1,4 @@
-package io.iacto
+package io.iacto.core
 
 import cats.implicits._
 import cats.effect._
@@ -21,7 +21,7 @@ object Main extends IOApp {
                Formula("{{first_name}}.{{last_name}}@company.com")),
       ))
 
-    val file = Paths.get("src/main/resources/mockaroo.small.csv")
+    val file = Paths.get("core/src/main/resources/mockaroo.small.csv")
     val format = Format.csv[IO]
 
     io.file

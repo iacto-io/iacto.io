@@ -1,4 +1,4 @@
-package io.iacto
+package io.iacto.core
 
 import cats.implicits._
 
