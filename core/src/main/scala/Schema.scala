@@ -1,4 +1,4 @@
-package io.iacto.core
+package com.github.plippe.funnel.core
 
 case class Schema(columns: List[Column]) {
   def headers: List[Header] = columns.map(_.header)

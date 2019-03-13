@@ -1,4 +1,4 @@
-package io.iacto.core
+package com.github.plippe.funnel.core
 
 import cats.implicits._
 import cats.effect._
