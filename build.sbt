@@ -19,7 +19,10 @@ lazy val server = project
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
+      "io.circe" %% "circe-generic" % "0.11.1",
+      "io.circe" %% "circe-literal" % "0.11.1",
       "org.http4s" %% "http4s-dsl" % "0.20.0-M6",
       "org.http4s" %% "http4s-blaze-server" % "0.20.0-M6",
+      "org.http4s" %% "http4s-circe" % "0.20.0-M6",
     )
   )
