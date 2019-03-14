@@ -1,4 +1,4 @@
-package com.github.plippe.funnel.server.schemas
+package com.github.plippe.funnel.server.services.schemas
 
 import cats.effect.Sync
 import com.github.plippe.funnel.server.http4s.CrudRoutes

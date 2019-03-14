@@ -1,4 +1,4 @@
-package com.github.plippe.funnel.server.schemas
+package com.github.plippe.funnel.server.services.schemas
 
 import cats.implicits._
 import cats.effect.Sync

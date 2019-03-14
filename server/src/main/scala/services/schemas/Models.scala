@@ -1,4 +1,4 @@
-package com.github.plippe.funnel.server.schemas
+package com.github.plippe.funnel.server.services.schemas
 
 case class Model(id: String, name: String, columns: Int)
 
